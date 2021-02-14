@@ -1,0 +1,96 @@
+.control
+{
+  width: 80%;
+  margin:auto;
+}
+.columns
+{
+  width: 80%;
+  margin:auto;
+}
+input:focus
+{
+  outline:none !important;
+}
+
+.input
+{
+  width: 60%;
+  margin:auto;display: block;
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+}
+::placeholder
+{
+  color:black;
+}
+.columns
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+table,tr,td,th
+{
+  border:1px solid rgba(117, 113, 113, 0.479) !important;
+  text-align: center;
+}
+/* table td
+{
+  cursor: pointer;
+} */
+.cbox
+{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.search
+{
+  width: 80%;
+  margin:auto;
+}
+.pagination
+{
+  display: flex;
+  font-size:12px;
+  justify-content: center;
+}
+
+.delivery_type,.offline
+{
+  width: 100%;
+  margin:auto;
+  border:1px solid rgba(117, 113, 113, 0.479) !important;
+  display: block;
+}
+.control2
+{
+  width: 80%;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.columns2
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: spa;
+}
+
+.columns3
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly ;
+}
+.modal-content
+{
+  display: flex;
+  flex-direction: column;
+  background:white;
+  height: 50%;
+  width: 50%;
+  justify-content: flex-start;
+}

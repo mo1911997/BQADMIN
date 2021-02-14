@@ -1,0 +1,29 @@
+<ngx-ui-loader></ngx-ui-loader>
+<div class="bg">
+<div class="columns">
+    <div class="card"><br>
+      <img src="assets/bqlogo.png" height="120" style="margin:auto;display:block;" width="120" alt="Image"/><br>
+      <p style="text-align:center;">Login</p>
+        <div class="card-content">
+          <form [formGroup]="loginForm">
+            <div class="is-half control">
+                <input (focus)="contactFocus()" class="input" maxlength="10" (keypress)="numberOnly($event)" formControlName="contact" type="text" placeholder="Contact">
+                <p [hidden]="contact_hidden" style="color:red;"><br>{{contact_error}}</p>
+            </div><br>
+            <div class="is-half control">
+                <input class="input" (focus)="passwordFocus()" formControlName="password" type="password" placeholder="Password">
+                <p [hidden]="password_hidden" style="color:red;"><br>** This field is required **</p>
+            </div><br>
+            <div class="cbox">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="chck" (change)="onCheckboxChecked($event)">
+                I am an agent
+              </label>
+            </div><br>
+            <button class="button is-black" (click)="checkLogin()" style="margin:auto;display:block;">Login</button><br>
+            <p style="text-align:center;" (click)="forgotPasswordClick()" class="forgot_password">Forgot Password ? </p>
+          </form>
+      </div>
+</div>
+</div>
+</div>

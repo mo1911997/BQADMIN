@@ -1,0 +1,202 @@
+<ngx-ui-loader></ngx-ui-loader>
+<!-- <div class="main_container"> -->
+<p class="is-size-3 has-text-centered is-size-5-mobile">Stores</p>
+<div class="search">
+  <input class="input" type="text" [(ngModel)]="term" placeholder="Search ...">
+</div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Owner Name</th>
+        <th>Open Time</th>
+        <th>Close Time</th>
+        <th>Minimum Order</th>
+        <th>Pending Amount</th>
+        <th>Delivery Type</th>
+        <th>Payments History</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of stores |filter:term | paginate: { itemsPerPage: maxsize, currentPage: p, totalItems: totalCountOfPages }">
+        <td (click)="onRowClicked(s._id)">{{s.name}}</td>
+        <td>{{s.contact}}</td>
+        <td>{{s.address}}</td>
+        <td>{{s.owner_name}}</td>
+        <td>{{s.open_time}}</td>
+        <td>{{s.close_time}}</td>
+        <td>{{s.minimum_order}}</td>
+        <td>{{s.pending_amount}}</td>
+        <td>{{s.delivery_type}}</td>
+        <td (click)="gotoPaymentDetails(s.pending_amount,s._id)">Show More</td>
+        <td>
+          <!-- <span (click)="deleteStore(s._id)" ><i class="fas fa-times"></i></span> -->
+          <span (click)="getStoreReport(s._id)"><i style="margin-left:10px;" class="fa fa-download"></i></span></td>
+        <!-- <td (click)="toggleModal()"><i class="fas fa-times"></i></td> -->
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls maxsize="maxsize" responsive="true" directionLinks="false" style="margin:auto;" (pageChange)="pageChanged($event)"  ></pagination-controls>
+        </ul>
+      </div>
+</div>
+<form [formGroup]="store_form">
+  <label for="image" style="border-radius:60% ;display:block;margin:auto;">
+    <input (change)="fileSelected($event)" type="file" id="image" style="display:none;"/>
+    <img style="border-radius:60% ;display:block;margin:auto;" alt="image" height="150" width="150" [src]="img_src" /><br>
+ </label>
+  <p style="color:red;text-align: center;" [hidden]="img_name_hidden"><br>{{this.img_name}}</p>
+ <p style="color:red;text-align: center;" [hidden]="file_error"><br>** Please choose any file  **</p>
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <div class="columns">
+        <div class="is-half control">
+            <input class="input" type="text" (focus)="name_focus()" formControlName="name" placeholder="Name">
+            <p style="color:red;text-align: center;" [hidden]="name_error"><br>** This field is required **</p>
+          </div><br>
+          <div class="control is-half">
+              <input class="input" type="text" (focus)="contact_focus()" (keypress)="numberOnly($event)" maxlength="10" formControlName="contact" placeholder="Contact">
+              <p style="color:red;text-align: center;" [hidden]="contact_error"><br>{{contact_error_text}}</p>
+          </div><br>
+    </div><br>
+    <div class="columns">
+        <div class="is-half control">
+            <input class="input" type="text" (focus)="address_focus()" placeholder="Address" formControlName="address">
+            <p style="color:red;text-align: center;" [hidden]="address_error"><br>** This field is required **</p>
+        </div><br>
+        <div class="is-half control">
+            <input class="input" type="text" (focus)="owner_focus()" placeholder="Contact Person Name" formControlName="owner_name">
+            <p style="color:red;text-align: center;" [hidden]="owner_error"><br>** This field is required **</p>
+        </div><br>
+    </div><br>
+    <div class="columns">
+        <div class="is-half control">
+            <input class="input" type="text" (keypress)="numberOnly2($event)" (focus)="latitude_focus()" placeholder="Latitude" formControlName="latitude">
+            <p style="color:red;text-align: center;" [hidden]="latitude_error"><br>** This field is required **</p>
+        </div><br>
+        <div class="is-half control">
+            <input class="input" type="text" (keypress)="numberOnly2($event)" (focus)="longitude_focus()" placeholder="Longitude" formControlName="longitude">
+            <p style="color:red;text-align: center;" [hidden]="longitude_error"><br>** This field is required **</p>
+        </div><br>
+    </div><br>
+    <div class="columns">
+        <div class="is-half control">
+            <input class="input" type="time" placeholder="Open Time" formControlName="open_time">
+        </div><br>
+        <div class="is-half control">
+            <input class="input" type="time" placeholder="Close Time" formControlName="close_time">
+        </div><br>
+    </div><br>
+     <div class="columns">
+         <!-- <div class="is-half control">
+            <input class="input" type="password" placeholder="Password" formControlName="password">
+        </div><br> -->
+        <div class="is-half control">
+            <input class="input" type="text" placeholder="Minimum Order" formControlName="minimum_order">
+        </div><br>
+        <div class="is-half control">
+        <div class="cbox">
+              <label class="checkbox">
+                <input type="checkbox" formControlName="gst_registered" (change)="onCheckboxChecked($event)">
+                GST Registered
+              </label>
+        </div>
+        </div>
+    </div><br>
+    <div class="columns" *ngIf="isGSTRegistered">
+      <div class="is-half control">
+          <input class="input" type="text" (focus)="address_focus()" placeholder="GST No" formControlName="gst_no">
+          <p style="color:red;text-align: center;" [hidden]="gst_error"><br>** This field is required **</p>
+      </div><br>
+      <div class="is-half control">
+          <input class="input" type="text" (focus)="owner_focus()" placeholder="Pan No" formControlName="pan_no">
+          <p style="color:red;text-align: center;" [hidden]="pan_error"><br>** This field is required **</p>
+      </div><br>
+  </div><br>
+    <div class="columns3">
+
+        <label class="checkbox">
+          <input type="checkbox" value="Pune" formControlName="pune">
+          Pune
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" value="Solapur" formControlName="solapur">
+          Solapur
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" value="Sangli" formControlName="sangli">
+          Sangli
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" value="Satara" formControlName="satara">
+          Satara
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" value="Kolhapur" formControlName="kolhapur">
+          Kolhapur
+        </label>
+    </div><br>
+    <div class="columns2">
+      <div class="select control2">
+        <select formControlName="delivery_type" class="delivery_type">
+          <option value="" selected disabled selected>Select Delivery Type</option>
+          <option value="self">self</option>
+          <option value="aaishani">aaishani</option>
+        </select>
+    </div>
+  </div><br>
+  <div class="columns2">
+    <div class="select control2">
+      <select formControlName="offline" class="offline">
+        <option value="" selected disabled selected>Offline</option>
+        <option value=true>Yes</option>
+        <option value=false>No</option>
+      </select>
+  </div>
+</div><br>
+  <div class="columns">
+      <div class="select control2" (focus)="store_type_focus()">
+          <select formControlName="store_category" class="delivery_type">
+            <option value="" disabled selected>Select Store Type</option>
+            <option value="Grocery Store">Grocery Store</option>
+            <option value="Super Market">Super Market</option>
+            <option value="Vegetable/Fruit Store">Vegetable/Fruit Store</option>
+            <option value="Bakery">Bakery</option>
+            <option value="Clothing Store">Clothing Store</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Electricals">Electricals</option>
+            <option value="Toy Store">Toy Store</option>
+            <option value="Furniture Store">Furniture Store</option>
+            <option value="Sweet Mart">Sweet Mart</option>
+            <option value="Medical Store">Medical Store</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Utility Store">Utility Store</option>
+            <option value="Jewellery Store">Jewellery Store</option>
+            <option value="Cosmetics Store">Cosmetics Store</option>
+            <option value="General Store">General Store</option>
+            <option value="Book Store">Book Store</option>
+            <option value="Steel Utilities">Steel Utilities</option>
+            <option value="Tea Depot">Tea Depot</option>
+            <option value="Edible Oil Shop">Edible Oil Shop</option>
+          </select>
+      </div>
+  </div><br>
+  <p style="color:red;text-align: center;" [hidden]="store_type_error"><br>** This field is required **</p>
+    <div class="columns" style="margin-bottom:20px;">
+        <button type="button" (click)="addStore()" class="button is-black">Add</button>
+        <button type="button" (click)="updateStore()" class="button is-black">Update</button>
+    </div>
+</form>
+<!-- </div> -->
+<div class="modal" [ngClass]="{ 'is-active' : isModalActive }">
+  <div class="modal-content"  style="border-radius:10px;">
+
+  <button class="modal-close is-large" (click)="removeModal()" aria-label="close"></button>
+  </div>
+  </div>
+

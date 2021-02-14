@@ -1,0 +1,11 @@
+{
+  "/rest":{
+      "target": "https://basketqueen.in/api",
+      "secure":false,
+      "changeOrigin":true,
+      "logLevel":"debug",
+      "pathRewrite" : {
+          "^/rest":""
+      }
+  }
+}

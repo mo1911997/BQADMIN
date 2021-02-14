@@ -1,0 +1,52 @@
+<p class="is-size-3 has-text-centered is-size-5-mobile">Order Details</p>
+<!-- TABS -->
+
+<div id="gallery">
+    <ul>
+      <li>
+          <div class="card" [ngStyle]="{'border-left': o._v == 'Cancelled' ? '12px solid #adacac' : o._v == 'Rejected' ? '12px solid #adacac' : o._v == 'Pending' ? '12px solid red' : o._v == 'Accepted' ? '12px solid #ffff00': o._v == 'Out for Delivery' ? '12px solid #2a93f5' :'12px solid #0ccf47'}">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4">{{o.order_id}}</p>
+                    <div class="sub-content">
+                      <div>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Date : {{o.date}}</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Time : {{o.order_time}}</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Order Total : {{o.total*1 + o.delivery_charges*1}}</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Delivery Charges : {{o.delivery_charges*1}}</p>
+                      </div>
+                      <div>
+                        <p style="font-size:14px !important;" class="subtitle is-6">User : {{o.user.name}}({{o.user.contact}})</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Store : {{o.store.name}} ({{o.store.contact}})</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Order Status : {{o._v}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="font-size:12px !important;" class="content">
+                  Address : {{o.address}}
+                </div>
+              </div>
+            </div><br>
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                  <tr>
+                    <th>Sr No</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let s of o.items;let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{s.product_name}}({{s.variant}})</td>
+                    <td>{{s.qty}}</td>
+                    <td>{{s.total}}</td>
+                  </tr>
+                </tbody>
+              </table>
+      </li>
+    </ul>
+  </div>

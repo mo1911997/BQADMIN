@@ -1,0 +1,12 @@
+<ngx-ui-loader></ngx-ui-loader>
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Payments History</p>
+<div class="top">
+  <p>Pending Amount</p>
+  <div style="display:flex;flex-direction:row;">
+    <p>{{amount}}</p>
+  </div>
+  <div *ngIf="amount != 0">
+    <button type="button" class="button is-black" (click)="clearPayment()">Clear</button>
+  </div>
+</div>

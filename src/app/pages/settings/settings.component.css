@@ -1,0 +1,28 @@
+.control
+{
+  width: 80%;
+  margin:auto;
+}
+input:focus
+{
+  outline:none !important;
+}
+.input
+{
+  border: 2px solid black !important;
+}
+::placeholder
+{
+  color:black;
+}
+.columns
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+table,tr,td,th
+{
+  border:2px solid black !important;
+  text-align: center;
+}

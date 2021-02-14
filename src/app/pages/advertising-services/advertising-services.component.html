@@ -1,0 +1,97 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Advertisement Services</p>
+<div class="search">
+    <form [formGroup]="searchForm">
+    <input class="input" type="text" [(ngModel)]="term" formControlName="searchbox" placeholder="Search ...">
+  </form>
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Contact Person Name</th>
+        <th>Visitors</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of services | filter:term | paginate: { itemsPerPage: 5, currentPage: p }">
+      <td  (click)="onRowClicked(s._id)">{{s.name}}</td>
+      <td>{{s.contact}}</td>
+      <td>{{s.contact_person_name}}</td>
+      <td>{{s.visitors}}</td>
+      <td>{{s.address}}</td>
+      <td (click)="deleteService(s._id)"><i class="fas fa-times"></i></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+</div>
+<form [formGroup]="advertising_service_form" style="margin-bottom:20px;">
+    <div class="imgs">
+  <div *ngFor="let i of img_arr">
+    <label for="image" style="border-radius:100%;">
+      <input multiple (change)="fileSelected($event)" type="file" id="image" style="display:none;"/>
+      <img style="border-radius:100% ;" alt="image" height="150" width="150" [src]="i" /><br>
+   </label>
+  </div>
+   </div>
+   <div class="imgs">
+    <div *ngFor="let j of img_names_arr">
+      <p style="color:red;">{{j}}</p>
+     </div>
+    </div><br>
+   <p style="color:red;text-align: center;" [hidden]="file_error"><br>** Please choose atlest one file  **</p>
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <div class="control">
+      <input class="input" (focus)="nameFocus()" type="text" formControlName="name" placeholder="Organization Name">
+      <p style="color:red;" [hidden]="name_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control">
+        <input class="input" (focus)="contactFocus()" type="text" maxlength="10" (keypress)="numberOnly($event)" formControlName="contact" placeholder="Organization Contact">
+        <p style="color:red;" [hidden]="contact_error"><br>{{contact_error_text}}</p>
+    </div><br>
+    <div class="control">
+      <input class="input" (focus)="contactPersonNameFocus()" type="text" formControlName="contact_person_name" placeholder="Contact Person Name">
+      <p style="color:red;" [hidden]="contact_person_name_error"><br>** This field is required **</p>
+  </div><br>
+  <div class="control">
+      <input class="input" (focus)="addressFocus()" type="text" formControlName="address" placeholder="Address">
+      <p style="color:red;" [hidden]="address_error"><br>** This field is required **</p>
+  </div><br>
+  <div class="select control2">
+      <select formControlName="service_type" (focus)="serviceTypeFocus()" class="select_store">
+        <option value="" disabled selected>Select Service Type</option>
+        <option value="Automobiles">Automobiles</option>
+        <option value="Classes">Classes</option>
+        <option value="Computer / IT Services">Computer / IT Services</option>
+        <option value="Event Management">Event Management</option>
+        <option value="Food & Caterers">Food & Caterers</option>
+        <option value="Health">Health</option>
+        <option value="Professional Services">Professional Services</option>
+        <option value="Beauty Parlour">Beauty Parlour</option>
+        <option value="Tours & Travels">Tours & Travels</option>
+        <option value="Shops">Shops</option>
+        <option value="Wedding Halls">Wedding Halls</option>
+      </select>
+  </div><br>
+  <div class="control">
+    <pre >
+    <textarea formControlName="description" style="white-space:pre-wrap;" wrap="off" class="textarea" placeholder="Description"></textarea>
+    </pre>
+      <p style="color:red;" [hidden]="description_error"><br>** This field is required **</p>
+  </div>
+  <p style="color:red;text-align: center;" [hidden]="store_type_error"><br>** This field is required **</p>
+  <br><br>
+    <div class="columns">
+        <button type="button" class="button is-black" (click)="addService()">Add</button>
+        <!-- <button type="button" class="button is-black" (click)="updateService()" >Update</button> -->
+    </div>
+</form>

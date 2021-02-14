@@ -1,0 +1,66 @@
+.control
+{
+  width: 80%;
+  margin:auto;
+}
+.search
+{
+  width: 80%;
+  margin:auto;
+}
+input:focus
+{
+  outline:none !important;
+}
+.imgs
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.pagination
+{
+  display: flex;
+  font-size:12px;
+  justify-content: center;
+}
+
+.input
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+}
+::placeholder
+{
+  color:black;
+}
+.columns
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+tr:hover
+{
+  cursor: pointer;
+}
+table,tr,td,th
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+  text-align: center;
+}
+.select_store
+{
+  width: 100%;
+  margin:auto;
+  display:block;
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+}
+.control2
+{
+  width: 80%;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

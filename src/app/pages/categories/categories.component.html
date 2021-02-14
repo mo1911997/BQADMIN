@@ -1,0 +1,58 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Categories</p>
+<div class="search">
+    <input class="input" type="text" [(ngModel)]="term" placeholder="Search ...">
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Store</th>
+        <!-- <th>Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of categories | filter:term | paginate: { itemsPerPage: 5, currentPage: p }">
+        <td (click)="onRowClicked(c._id)">{{c.name}}</td>
+        <td>{{c.description}}</td>
+        <td>{{c.store.name}}</td>
+        <!-- <td (click)="deleteCategory(c._id)"><i class="fas fa-times"></i></td> -->
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls responsive="true" directionLinks="false" style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+</div>
+<form [formGroup]="categories_form">
+  <label for="image" style="border-radius:60% ;display:block;margin:auto;">
+    <input (change)="fileSelected($event)" type="file" id="image" style="display:none;"/>
+    <img style="border-radius:60% ;display:block;margin:auto;" alt="image" height="150" width="150" [src]="img_src" /><br>
+    <p style="color:red;text-align: center;" [hidden]="img_name_hidden">{{this.img_name}}</p>
+    <p style="color:red;text-align: center;" [hidden]="file_error"><br>** Chooose any file ! **</p>
+  </label><br>
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+      <div class="select control2">
+        <select formControlName="store" (focus)="storeFocus()" class="select_store">
+          <option value="" selected disabled>Select Store</option>
+          <option *ngFor="let s of stores" [value]="s._id">{{s.name}}({{ s.contact}})</option>
+        </select>
+      </div>
+      <p style="color:red;text-align: center;" [hidden]="store_error"><br>** This field is required **</p>
+      <br>
+    <div class="control">
+      <input class="input" type="text" (focus)="nameFocus()" formControlName="name" placeholder="Name">
+      <p style="color:red;" [hidden]="name_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control">
+        <textarea class="textarea" formControlName="description" type="text" placeholder="Description"></textarea>
+    </div><br><br>
+    <div class="columns" style="margin-bottom:20px;">
+      <button class="button is-black" (click)="addCategory()">Add</button>
+      <button class="button is-black" (click)="updateCategory()" >Update</button>
+    </div>
+</form>

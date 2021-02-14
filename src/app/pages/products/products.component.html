@@ -1,0 +1,155 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Products</p>
+<div class="search">
+    <input class="input" type="text" [(ngModel)]="term" placeholder="Search ...">
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Percentage</th>
+        <th>Store</th>
+        <!-- <th>Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let pp of products_list |filter:term | paginate: { itemsPerPage: 5, currentPage: p }">
+        <td (click)="updateChangedTableRowClick(pp._id,pp.store.gst_registered)">{{pp.name}}</td>
+        <td>{{pp.slab_amt}}</td>
+        <td>{{pp.store.name}}</td>
+        <!-- <td (click)="deleteProduct(pp._id,pp.store._id)"><i class="fas fa-times"></i></td> -->
+        </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls responsive="true" directionLinks="false"  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+  </div>
+</div>
+<form [formGroup]="products_form">
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <!-- <label for="image" style="border-radius:60% ;display:block;margin:auto;">
+      <input type="file" id="image" style="display:none;"/>
+      <img class="img-fluid" style="border-radius:60% ;display:block;margin:auto;" alt="image" src="../../../assets/bqlogo.png" /><br>
+   </label> -->
+   <div  class="imgs">
+   <div *ngFor="let i of img_arr">
+    <label for="image" style="border-radius:60% ;display:block;margin:auto;">
+      <input multiple (change)="fileSelected($event)" type="file" id="image" style="display:none;"/>
+      <img style="border-radius:60% ;display:block;margin:auto;" alt="image" height="150" width="150" [src]="i" /><br>
+   </label>
+   </div>
+  </div>
+  <div class="imgs">
+  <div *ngFor="let j of img_names_arr">
+    <p style="color:red;">{{j}}</p>
+   </div>
+  </div><br>
+  <p style="color:red;text-align: center;" [hidden]="file_error"><br>** Please choose atleast one file  **</p>
+    <div class="select control2">
+        <select formControlName="store" (focus)="store_focus()" (change)="onStoreSelected($event)" class="select_store">
+          <option value="" selected disabled>Select Store</option>
+          <option [value]="s._id" *ngFor="let s of stores">{{s.name}} ({{s.contact}})</option>
+        </select>
+    </div>
+    <p style="color:red;text-align: center;" [hidden]="store_error"><br>** This field is required **</p>
+    <br>
+    <div class="select control2">
+      <select formControlName="category" (focus)="category_focus()" class="select_store">
+        <option value="" selected disabled>Select Category</option>
+        <option [value]="c._id" *ngFor="let c of categories">{{c.name}}</option>
+      </select>
+
+  </div>
+  <p style="color:red;text-align: center;" [hidden]="category_error"><br>** This field is required **</p>
+  <br>
+    <div class="control">
+      <input class="input" type="text" (focus)="name_focus()" placeholder="Name" formControlName="name">
+      <p style="color:red;text-align: center;" [hidden]="name_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control" *ngIf="hsn_visible">
+      <input class="input" type="text" (focus)="hsn_focus()" placeholder="HSN" formControlName="hsn">
+      <p style="color:red;text-align: center;" [hidden]="hsn_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="select control2">
+        <select formControlName="status" (focus)="status_focus()" class="status">
+          <option value="" selected disabled>Select Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+
+    </div>
+    <p style="color:red;text-align: center;" [hidden]="status_error"><br>** This field is required **</p>
+    <br>
+    <div class="control">
+        <input class="input" type="text" (focus)="gst_per_focus()" placeholder="GST Percentage" formControlName="gst_per">
+        <p style="color:red;text-align: center;"  [hidden]="gst_per_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control">
+        <div class="cbox">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="returnable" (change)="onCheckboxChecked($event)">
+              Returnable
+            </label>
+      </div>
+    </div><br>
+    <div class="control">
+        <input class="input" type="text" (focus)="commission_focus()" placeholder="Commission Percentage" formControlName="percentage">
+        <p style="color:red;text-align: center;" [hidden]="commission_per_error"><br>** This field is required **</p>
+    </div><br><br>
+    <div class="control">
+      <pre >
+      <textarea formControlName="description" style="white-space:pre-wrap;" wrap="off" class="textarea" placeholder="Description"></textarea>
+      </pre>
+        <p style="color:red;" [hidden]="description_error"><br>** This field is required **</p>
+    </div><br>
+              <div class="columns4">
+                  <h4 style="text-align: center;" class="is-half">Variants</h4><br>
+                  <button class="button is-black is-half" type="button" (click)="addVariants()">+</button>
+              </div><br>
+              <div formArrayName="variants"
+                *ngFor="let item of products_form.get('variants')?.controls; let i = index;">
+                <div [formGroupName]="i">
+                  <div class="columns">
+                      <div class="control" style="width:55%;margin-left: 10px;">
+                  <input class="input" type="text" placeholder="Name" formControlName="name">
+              </div>
+              <div class="control" style="width:40%;margin-left: 10px;" >
+                <!-- <input class="input"(focusout)="onPurchaseAmountFocusChanged(i,$event)" type="text" placeholder="Purchase Amount" formControlName="purchase_amount"> -->
+                <input class="input" type="text" placeholder="Purchase Amount" formControlName="purchase_amount">
+            </div>
+              <div class="control" style="width:40%;margin-left: 10px;">
+                  <input class="input" type="text" placeholder="MRP" formControlName="mrp">
+              </div>
+              <div class="control" style="width:60%;margin-left: 10px;">
+                  <input class="input" type="text" placeholder="Discounted Price" formControlName="discounted_price">
+              </div>
+              <div class="control" style="width:50%;margin-left: 10px;">
+                  <input class="input" type="text" placeholder="Threshold" formControlName="threshold">
+              </div>
+              <div class="select" style="margin-left: 10px;">
+                  <select formControlName="status">
+                    <option value="" selected disabled>Select Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+              </div>
+              <div class="control" style="width:50%;margin-left: 10px;">
+                  <input class="input" type="text" placeholder="Weight" formControlName="weight">
+              </div>
+              <div class="control" style="width:70%;margin-left: 10px;">
+                <input class="input" type="text" placeholder="Description" formControlName="description">
+            </div>
+          </div><br>
+        </div>
+        <!-- Chosen name: {{ add_student_form.controls.parents.controls[i].controls.name.value }} -->
+      </div><br><br>
+
+    <div class="columns" style="margin-bottom:20px;">
+        <button type="button" (click)="addProduct()" class="button is-black">Add</button>
+        <button type="button" (click)="updateProduct()" class="button is-black">Update</button>
+    </div>
+</form>

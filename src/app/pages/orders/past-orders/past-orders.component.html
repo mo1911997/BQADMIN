@@ -1,0 +1,47 @@
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Past Orders</p>
+<div class="search">
+    <input class="input" [(ngModel)]="term" style="width:60% !important;" type="text" placeholder="Search ...">
+    <form [formGroup]="getDateForm">
+      <input class="input" (change)="getDate()" formControlName="date" style="width:100% !important;" type="date" placeholder="Select Date">
+    </form>
+</div><br>
+<div class="table-container">
+  <div *ngFor="let o of orders |filter:term | paginate: { itemsPerPage: 15, currentPage: p }">
+    <!-- 'background-image':' url(' + bb+o.store.thumbnail + ')','background-repeat':'no-repeat','background-position':'center' -->
+    <div class="card" [ngStyle]="{'border-left': o._v == 'Cancelled' ? '12px solid #adacac' : o._v == 'Rejected' ? '12px solid #adacac' : o._v == 'Pending' ? '12px solid red' : o._v == 'Accepted' ? '12px solid #ffff00': o._v == 'Out for Delivery' ? '12px solid #2a93f5' :'12px solid #0ccf47'}">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+              <p  (click)="gotoDetails(o)" class="title is-4">{{o.order_id}}</p>
+              <!-- <select (change)="onStoreSelected($event)" class="select_store">
+                  <option value="" selected disabled>Select Store</option>
+                  <option [value]="s._id" *ngFor="let s of stores">{{s.name}} ({{s.contact}})</option>
+              </select> -->
+              <!-- <div style="display:flex;flex-direction:row;justify-content:space-evenly">
+                </div> -->
+            <div class="sub-content">
+              <div>
+                <p style="font-size:14px !important;" class="subtitle is-6">Date : {{o.date}}</p>
+                <p style="font-size:14px !important;" class="subtitle is-6">Time : {{o.order_time}}</p>
+                <p style="font-size:14px !important;" class="subtitle is-6">Order Total : {{o.total*1 + o.delivery_charges*1}}</p>
+                <p style="font-size:14px !important;" class="subtitle is-6">Delivery Charges : {{o.delivery_charges}}</p>
+              </div>
+              <div>
+                <p style="font-size:14px !important;" class="subtitle is-6">User : {{o.user.name}}({{o.user.contact}})</p>
+                <p style="font-size:14px !important;" class="subtitle is-6">Store : {{o.store.name}} ({{o.store.contact}})</p>
+                <p style="font-size:14px !important;" class="subtitle is-6">Order Status : {{o._v}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px !important;" class="content">
+          Address : {{o.address}}
+        </div>
+      </div>
+    </div><br>
+  </div>
+  <ul style="display:none;">
+    <pagination-controls  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+    </ul>
+</div>

@@ -1,0 +1,52 @@
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Suppliers</p>
+<div class="search">
+  <form [formGroup]="searchForm">
+    <input class="input" type="text" formControlName="searchbox" placeholder="Search ...">
+  </form>
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>One</th>
+        <th>One</th>
+        <th>One</th>
+        <th>One</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>One</td>
+        <td>One</td>
+        <td>One</td>
+        <td>One</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+</div>
+<br>
+<form>
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <div class="control">
+      <input class="input" type="text" placeholder="Name">
+    </div><br>
+    <div class="control">
+        <input class="input" type="text" placeholder="Contact">
+    </div><br>
+    <div class="control">
+        <input class="input" type="text" placeholder="Address">
+    </div><br>
+    <div class="control">
+        <input class="input" type="text" placeholder="Password">
+    </div><br><br>
+    <div class="columns" style="margin-bottom:20px;">
+        <button class="button is-black">Add</button>
+        <button class="button is-black">Update</button>
+    </div>
+</form>

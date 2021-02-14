@@ -1,0 +1,78 @@
+table,tr,td,th
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+  text-align: center;
+}
+.search
+{
+
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+input
+{
+  width: 80% !important;
+}
+#gallery{
+  width: 90%;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+}
+#gallery ul {
+  padding: 0;
+  width: 100%;
+  font-size: 0;
+}
+
+#gallery ul li {
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.modal-content
+{
+  display: flex;
+  flex-direction: column;
+  background:white;
+  height: 80%;
+  width: 80%;
+  justify-content: flex-start;
+}
+.is-4:hover
+{
+  cursor: pointer;
+}
+.pagination
+{
+  display: flex;
+  font-size:12px;
+  justify-content: center;
+}
+.sub-content
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.select_store
+{
+  width: 100%;
+  margin:auto;
+  display:block;
+  border:1px solid rgba(117, 113, 113, 0.479);
+}
+.control2
+{
+  width: 40%;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+

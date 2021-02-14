@@ -1,0 +1,71 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Returns</p>
+
+<div id="gallery">
+    <ul>
+      <li *ngFor="let o of requests;let r=index;">
+          <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4">{{o.order_id}}</p>
+                     <div class="sub-content">
+                      <div>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Date : {{o.date}}</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Reason : {{o.reason}}</p>
+                      </div>
+                      <div>
+                        <p style="font-size:14px !important;" class="subtitle is-6">User : {{o.user.name}}({{o.user.contact}})</p>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Refund Details : {{o.online != undefined ? "Online Payment" :o.upi === undefined ? o.bank_details.account_no+o.bank_details.ifsc+o.bank_details.account_holder_name :o.upi.id }}</p>
+                      </div>
+                      <div>
+                        <p style="font-size:14px !important;" class="subtitle is-6">Description : {{o.description}}</p>
+                        <button type="button" class="button is-black">Refund Initiated</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                  <thead>
+                    <tr>
+                      <th>Sr No</th>
+                      <th>Item</th>
+                      <th>Total</th>
+                      <th>Requested Qty</th>
+                      <th>Approved Qty</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr  *ngFor="let s of o.items;let ii = index;">
+                      <td>{{ii+1}}</td>
+                      <td>{{s.product}}({{s.variant}})</td>
+                      <td>{{s.rate}}</td>
+                      <td>{{s.requested_qty}}</td>
+                      <td>
+                        <select *ngIf="mainList[r][ii];else qtyelse1" class="select_store" (change)="getSelectedQty($event,s.id,o)">
+                        <option disabled selected value="Select"></option>
+                          <option *ngFor="let ss of ' '.repeat(s.requested_qty).split(''),let i=index" value="{{s.approved_qty != 0 ? s.approved_qty :i+1}}">{{s.approved_qty != 0 ? s.approved_qty :i+1}}</option>
+                        </select>
+                        <ng-template #qtyelse1>{{s.approved_qty}}</ng-template>
+                      </td>
+                      <td>
+                      <select *ngIf="mainList[r][ii];else qtyelse2" class="select_store" (change)="getSelectedStatus($event,s.id,o)">
+                          <option disabled selected value="Select"></option>
+                          <option vale="Approved">Approved</option>
+                          <option vale="Rejected">Rejected</option>
+                        </select>
+                        <ng-template #qtyelse2>{{statusFinalList[r][ii] == true ? "Approved" : "Rejected"}}</ng-template>
+                      </td>
+                      <td (click)="update(r)"><i class="fas fa-edit"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+      </li>
+      <br>
+
+    </ul>
+  </div>

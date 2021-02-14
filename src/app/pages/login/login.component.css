@@ -1,0 +1,54 @@
+
+.columns
+{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction:column;
+}
+.card
+{
+  width: 50%;
+  height: auto;
+  border-radius: 15px;
+}
+.control
+{
+  width: 80%;
+  margin:auto;
+}
+
+input:focus
+{
+  outline:none !important;
+}
+.input
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important ;
+}
+::placeholder
+{
+  color:black;
+}
+
+.forgot_password:hover
+{
+  cursor: pointer;
+}
+.cbox
+{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("../../../assets/web_texturedbg.png");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

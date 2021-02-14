@@ -1,0 +1,92 @@
+table,tr,td,th
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+  text-align: center;
+}
+tr:hover
+{
+  cursor: pointer;
+}
+.search
+{
+  width: 80%;
+  margin:auto;
+}
+.pagination
+{
+  display: flex;
+  font-size:12px;
+  justify-content: center;
+}
+input
+{
+  border: 1px solid rgba(117, 113, 113, 0.479) !important;
+}
+#gallery{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#gallery ul {
+  padding: 0;
+  width: 100%;
+  font-size: 0;
+}
+
+#gallery ul li {
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.imgs
+{
+  display: inline-flex;
+
+  width: '100%';
+  flex-direction: row;
+}
+.modal-content
+{
+  display: flex;
+  flex-direction: column;
+  background:white;
+  height: 80%;
+  width: 80%;
+  justify-content: flex-start;
+}
+.main_row
+{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    overflow: auto;
+}
+::-webkit-scrollbar{
+  display: none;
+}
+.sub-content
+{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.card-content
+{
+  width: 100%;
+  height: auto;
+}
+.card
+{
+  width: 80%;
+  /* display: inline-block; */
+  margin-left: 10px;
+}
+.bottom
+{
+
+  /* margin: auto; */
+}

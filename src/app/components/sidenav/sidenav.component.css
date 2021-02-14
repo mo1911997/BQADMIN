@@ -1,0 +1,125 @@
+/* .columns
+{
+  height: 100vh;
+}
+
+.is-2
+{
+  background-image: url("../../../assets/web_navbarbg.png");
+  height: 100%;
+  background-position: center;
+  opacity: 0.7;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.menu-list
+{
+  margin-top:20px;
+}
+.is-2 a
+{
+  color:black !important;
+  width: 100%;
+  margin-left: 6px;
+}
+ul li a.active
+{
+  background:white;
+  color:black !important;
+}
+.is-2 a:hover
+{
+  background: white;
+  color: black !important;
+  width: 100%;
+  margin-left: 6px;
+}
+.is-10
+{
+  height: 100%;
+  background: #F0F0F0;
+}
+img
+{
+  margin:auto;
+  margin-top:20px;
+  display: block;
+}
+ul li
+{
+  text-align: center;
+} */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  background-image: url("../../../assets/web_navbarbg.png");
+  width: 200px;
+  /* background-color: #f1f1f1; */
+  position: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  overflow: scroll;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+.sidebar a.active {
+  background-color: white;
+  color: black;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #1B8B99;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-image: url("../../../assets/web_texturedbg.png");
+  height: 100vh;
+  overflow: scroll;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+p:hover{
+  cursor: pointer;
+}
+
+  main {
+    position: relative;
+  }
+  /deep/ router-outlet ~ * {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+

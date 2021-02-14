@@ -1,0 +1,69 @@
+<ngx-ui-loader></ngx-ui-loader>
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Delivery Agents</p>
+<div class="searchForm">
+    <input class="input" type="text" [(ngModel)]="term" placeholder="Search ...">
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Store</th>
+        <th>Cash In Hand</th>
+        <th>Payments History</th>
+        <!-- <th>Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of deliveryAgents| filter:term | paginate: { itemsPerPage: 5, currentPage: p }">
+        <td  (click)="onRowClicked(s._id)">{{s.name}}</td>
+        <td>{{s.contact}}</td>
+        <td>{{s.address}}</td>
+        <td>{{s.store.name}}</td>
+        <td>{{s.cash_in_hand}}</td>
+        <td (click)="gotoPaymentDetails(s.cash_in_hand,s._id)">Show More</td>
+        <!-- <td (click)="deleteDeliveryAgent(s._id)"><i class="fas fa-times"></i></td> -->
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls responsive="true" directionLinks="false" style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+</div>
+<br>
+<form [formGroup]="delivery_agents_form">
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <div class="select control2">
+      <select formControlName="store" (focus)="storeFocus()" class="select_store">
+        <option disabled>Select Store</option>
+        <option *ngFor="let s of stores" [value]="s._id">{{s.name}}</option>
+      </select>
+    </div>
+    <p style="color:red;text-align: center;" [hidden]="store_error"><br>** This field is required **</p>
+    <br>
+    <div class="control">
+      <input class="input" (focus)="nameFocus()" type="text" formControlName="name" placeholder="Name">
+      <p style="color:red;" [hidden]="name_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control">
+        <input class="input" (focus)="contactFocus()" type="text" maxlength="10" (keypress)="numberOnly($event)" formControlName="contact" placeholder="Contact">
+        <p style="color:red;" [hidden]="contact_error"><br>{{contact_error_text}}</p>
+    </div><br>
+    <div class="control">
+        <input class="input" (focus)="addressFocus()" type="text" formControlName="address" placeholder="Address">
+        <p style="color:red;" [hidden]="address_error"><br>** This field is required **</p>
+    </div><br>
+    <!-- <div class="control">
+        <input class="input" type="password" formControlName="password" placeholder="Password">
+    </div><br> -->
+    <br><br>
+    <div class="columns" style="margin-bottom:20px;">
+        <button type="button" (click)="addDeliveryAgent()" class="button is-black">Add</button>
+        <button type="button" (click)="updateDeliveryAgent()" class="button is-black">Update</button>
+    </div>
+</form>

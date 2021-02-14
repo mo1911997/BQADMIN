@@ -1,0 +1,62 @@
+<ngx-ui-loader></ngx-ui-loader>
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Banners</p>
+<div class="search">
+    <input class="input" type="text" placeholder="Search ...">
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Sr No</th>
+        <th>Store</th>
+        <th>Category</th>
+        <th>Product</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let n of banners;let i=index;">
+        <td>{{i+1}}</td>
+        <td>{{n.store.name}}</td>
+        <td>{{n.category.name}}</td>
+        <td>{{n.product.name}}</td>
+        <td (click)="deleteBanner(n._id)"><i class="fas fa-times"></i></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls responsive="true" directionLinks="false" style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+      <form [formGroup]="bannerForm">
+        <div class="select control2">
+          <select (focus)="store_focus()" (change)="onStoreSelected($event)" formControlName="store" class="select_store">
+            <option value="" disabled selected>Select Store</option>
+            <option *ngFor="let s of stores" [value]="s._id">{{s.name}}</option>
+          </select>
+      </div>
+      <p style="color:red;text-align: center;" [hidden]="store_error"><br>** This field is required **</p>
+      <br><br>
+      <div class="select control2">
+        <select (focus)="category_focus()" (change)="onCategorySelected($event)" formControlName="category" class="select_store">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let s1 of categories" [value]="s1._id">{{s1.name}}</option>
+        </select>
+    </div>
+    <p style="color:red;text-align: center;" [hidden]="category_error"><br>** This field is required **</p>
+    <br><br>
+    <div class="select control2">
+      <select formControlName="product" (focus)="product_focus()" (change)="onProductSelected($event)" class="select_store">
+        <option value="" disabled selected>Select Product</option>
+        <option *ngFor="let s2 of products" [value]="s2._id">{{s2.name}}</option>
+      </select>
+  </div>
+  <p style="color:red;text-align: center;" [hidden]="product_error"><br>** This field is required **</p>
+  <br><br>
+  <div class="columns" style="margin-bottom:20px;">
+    <button class="button is-black" (click)="addBanner()">Add</button>
+  </div>
+      </form>
+</div>

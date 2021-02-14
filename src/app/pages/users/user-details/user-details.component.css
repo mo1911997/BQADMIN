@@ -1,0 +1,27 @@
+#gallery{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+#gallery ul {
+  padding: 0;
+  width: 100%;
+  font-size: 0;
+}
+
+#gallery ul li {
+  text-align: center;
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.sub-content
+{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}

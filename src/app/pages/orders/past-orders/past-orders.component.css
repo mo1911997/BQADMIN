@@ -1,0 +1,30 @@
+.search
+{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.control2
+{
+  width: 40%;
+  margin:auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.is-4:hover
+{
+  cursor: pointer;
+}
+.sub-content
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.pagination
+{
+  display: flex;
+  font-size:12px;
+  justify-content: center;
+}

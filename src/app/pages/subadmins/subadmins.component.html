@@ -1,0 +1,55 @@
+<ngx-ui-loader></ngx-ui-loader>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Subadmins</p>
+<div class="search">
+  <form [formGroup]="searchForm">
+    <input class="input" type="text" formControlName="searchbox" placeholder="Search ...">
+  </form>
+  </div><br>
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>City</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of subadmins">
+      <td  (click)="onRowClicked(s._id)">{{s.name}}</td>
+      <td>{{s.contact}}</td>
+      <td>{{s.city}}</td>
+      <td (click)="deleteSubadmin(s._id)"><i class="fas fa-times"></i></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+      <ul>
+        <pagination-controls responsive="true" directionLinks="false"  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+      </div>
+</div>
+<br>
+<form [formGroup]="subadmins_form">
+    <!-- <h3 style="text-align:center;">Subadmins</h3> -->
+    <div class="control">
+      <input class="input" (focus)="nameFocus()" type="text" formControlName="name" placeholder="Name">
+      <p style="color:red;" [hidden]="name_error"><br>** This field is required **</p>
+    </div><br>
+    <div class="control">
+        <input class="input" (focus)="contactFocus()" type="text" maxlength="10" (keypress)="numberOnly($event)" formControlName="contact" placeholder="Contact">
+        <p style="color:red;" [hidden]="contact_error"><br>{{contact_error_text}}</p>
+    </div><br>
+    <div class="control">
+      <input class="input" (focus)="cityFocus()" type="text" formControlName="city" placeholder="City">
+      <p style="color:red;" [hidden]="city_error"><br>** This field is required **</p>
+  </div><br>
+    <!-- <div class="control">
+        <input class="input" type="password" formControlName="password" placeholder="Password">
+    </div><br><br> -->
+    <div class="columns">
+        <button type="button" class="button is-black" (click)="addSubadmin()">Add</button>
+        <button type="button" class="button is-black" (click)="updateSubadmin()">Update</button>
+    </div>
+</form>

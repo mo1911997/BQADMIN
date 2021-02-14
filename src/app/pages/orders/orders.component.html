@@ -1,0 +1,84 @@
+<ngx-ui-loader></ngx-ui-loader>
+<br>
+<p class="is-size-3 has-text-centered is-size-5-mobile">Orders</p>
+<div class="search">
+    <input class="input" style="width:60% !important;" type="text" [(ngModel)]="term" placeholder="Search ...">
+    <button class="button" (click)="gotoPastOrders()">Past Orders</button>
+    <button class="button" (click)="toggleModal()">Get Orderwise Report</button>
+  </div><br>
+<div class="table-container">
+      <div *ngFor="let o of orders |filter:term | paginate: { itemsPerPage: 15, currentPage: p };let i=index;">
+        <!-- 'background-image':' url(' + bb+o.store.thumbnail + ')','background-repeat':'no-repeat','background-position':'center' -->
+        <div class="card" [ngStyle]="{'border-left': o._v == 'Cancelled' ? '12px solid #adacac' : o._v == 'Rejected' ? '12px solid #adacac' : o._v == 'Pending' ? '12px solid red' : o._v == 'Accepted' ? '12px solid #ffff00': o._v == 'Out for Delivery' ? '12px solid #2a93f5' :'12px solid #0ccf47'}">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                  <p  (click)="openDialog(o)" class="title is-4">{{o.order_id}}</p>
+                   <div style="display:flex;justify-content:space-evenly;">
+                      <div *ngIf="updateStatusDropdownHidden[i] === false" class="select control2">
+                          <select class="select_store" (change)="onStatusChanged($event,o.store._id,o.order_id)">
+                            <option value="" selected disabled>Update Status</option>
+                            <option *ngIf="acceptList[i] === true" value="Accept">Accept</option>
+                            <option *ngIf="rejectList[i] === true" value="Reject">Reject</option>
+                            <option *ngIf="deliveryList[i] === true" value="Assign Delivery Agent">Assign Delivery Agent</option>
+                          </select>
+                        </div>
+                      <div *ngIf="updateStatusDropdownHidden[i] === false"  class="select control2" >
+                          <select class="select_store" (change)="onDelboySelected($event,o.store._id,o.order_id,i)" [disabled]="delboySelectDisabled">
+                            <option value="" selected disabled>Assign Delivery Agent</option>
+                            <option *ngFor="let s of deliveryAgents" [value]="s._id">{{s.name}}({{ s.contact}})</option>
+                          </select>
+                        </div>
+                  </div><br>
+                  <!-- <select (change)="onStoreSelected($event)" class="select_store">
+                      <option value="" selected disabled>Select Store</option>
+                      <option [value]="s._id" *ngFor="let s of stores">{{s.name}} ({{s.contact}})</option>
+                  </select> -->
+                  <!-- <div style="display:flex;flex-direction:row;justify-content:space-evenly">
+                    </div> -->
+                <div class="sub-content">
+                  <div>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Date : {{o.date}}</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Time : {{o.order_time}}</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Order Total : {{o.total*1 + o.delivery_charges*1}}</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Delivery Charges : {{o.delivery_charges}}</p>
+                  </div>
+                  <div>
+                    <p style="font-size:14px !important;" class="subtitle is-6">User : {{o.user.name}}({{o.user.contact}})</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Store : {{o.store.name}} ({{o.store.contact}})</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Order Status : {{o._v}}</p>
+                    <p style="font-size:14px !important;" class="subtitle is-6">Payment Mode : {{o.payment_mode}}</p>
+                    <span *ngIf="o.payment_status !== '' ">
+                      <p style="font-size:14px !important;" class="subtitle is-6">Payment Status : {{o.payment_status}}</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:12px !important;" class="content">
+              Address : {{o.address}}
+            </div>
+            <span *ngIf="o.delivery_boy !== undefined">
+              <div style="font-size:12px !important;" class="content">
+                Delivery Agent : {{o.delivery_boy.name}}
+              </div>
+            </span>
+          </div>
+        </div><br>
+      </div>
+      <ul style="display:none;">
+        <pagination-controls  style="margin:auto;" (pageChange)="p = $event"></pagination-controls>
+        </ul>
+</div>
+
+  <div class="modal" [ngClass]="{ 'is-active' : isModalActive }">
+    <div class="modal-background"></div>
+    <div  style="height:15%;" class="modal-content">
+      <form [formGroup]="getDateForm" style="margin:20px;display:flex;width:100%;justify-content:space-evenly;">
+          <input class="input" formControlName="startDate" style="width:30% !important;" type="date" placeholder="Start Date">
+          <input class="input" formControlName="endDate" style="width:30% !important;" type="date" placeholder="End Date">
+        <button class="button is-black" (click)="generateReport()">Submit</button>
+      </form>
+    </div>
+    <button class="modal-close is-large" (click)="removeModal()" aria-label="close"></button>
+  </div>
